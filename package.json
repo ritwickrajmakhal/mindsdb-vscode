@@ -1,0 +1,135 @@
+{
+  "name": "mindsdb",
+  "displayName": "MindsDB",
+  "description": "MindsDB is a popular open-source query engine for AI analytics, powering AI agents that need to answer questions directly from databases, data warehouses, and applications, with no ETL required.",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.110.0"
+  },
+  "categories": [
+    "Other"
+  ],
+
+  "main": "./dist/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "mindsdb-explorer",
+          "title": "MindsDB",
+          "icon": "resources/mindsdb-icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "mindsdb-explorer": [
+        {
+          "id": "mindsdb-system",
+          "name": "System",
+          "icon": "resources/mindsdb-icon.svg"
+        },
+        {
+          "id": "mindsdb-projects",
+          "name": "Projects",
+          "icon": "resources/mindsdb-icon.svg"
+        },
+        {
+          "id": "mindsdb-datasources",
+          "name": "Datasources",
+          "icon": "resources/mindsdb-icon.svg"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "mindsdb.addConnection",
+        "title": "Add Connection",
+        "icon": "$(add)"
+      },
+      {
+        "command": "mindsdb.deleteConnection",
+        "title": "Delete Connection",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "mindsdb.refreshConnections",
+        "title": "Refresh",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "mindsdb.newNotebook",
+        "title": "New MindsDB Notebook",
+        "shortTitle": "New Notebook"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "mindsdb.addConnection",
+          "when": "view == mindsdb-system",
+          "group": "navigation"
+        },
+        {
+          "command": "mindsdb.refreshConnections",
+          "when": "view == mindsdb-system",
+          "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "mindsdb.deleteConnection",
+          "when": "viewItem == connection",
+          "group": "inline"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "mindsdb.addConnection"
+        },
+        {
+          "command": "mindsdb.newNotebook"
+        }
+      ]
+    },
+    "notebooks": [
+      {
+        "type": "mindsdb-notebook",
+        "displayName": "MindsDB Notebook",
+        "selector": [
+          {
+            "filenamePattern": "*.mindsdb"
+          }
+        ]
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "npm run check-types && npm run lint && node esbuild.js",
+    "watch": "npm-run-all -p watch:*",
+    "watch:esbuild": "node esbuild.js --watch",
+    "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
+    "package": "npm run check-types && npm run lint && node esbuild.js --production",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "check-types": "tsc --noEmit",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "@types/node": "22.x",
+    "@types/vscode": "^1.110.0",
+    "@vscode/test-cli": "^0.0.12",
+    "@vscode/test-electron": "^2.5.2",
+    "esbuild": "^0.27.3",
+    "eslint": "^9.39.3",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.56.1"
+  },
+  "dependencies": {
+    "mindsdb-js-sdk": "^2.3.2"
+  }
+}
