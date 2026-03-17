@@ -73,17 +73,20 @@ export class MindsDBNotebookController {
         this._controller.executeHandler = this._execute.bind(this);
     }
 
-    private _execute(
+    private async _execute(
         cells: vscode.NotebookCell[],
         _notebook: vscode.NotebookDocument,
         _controller: vscode.NotebookController
-    ): void {
+    ): Promise<void> {
         for (let cell of cells) {
-            this._doExecution(cell);
+            const success = await this._doExecution(cell);
+            if (!success) {
+                break; // Stop execution on first failure
+            }
         }
     }
 
-    private async _doExecution(cell: vscode.NotebookCell): Promise<void> {
+    private async _doExecution(cell: vscode.NotebookCell): Promise<boolean> {
         const execution = this._controller.createNotebookCellExecution(cell);
         execution.executionOrder = ++this._executionOrder;
         execution.start(Date.now());
@@ -91,17 +94,22 @@ export class MindsDBNotebookController {
         if (!MindsDBClient.isConnected()) {
             execution.replaceOutput([
                 new vscode.NotebookCellOutput([
-                    vscode.NotebookCellOutputItem.error(new Error("Please connect to a MindsDB instance via the Activity Bar first."))
+                    vscode.NotebookCellOutputItem.text("Error: Please connect to a MindsDB instance via the Activity Bar first.", 'text/plain')
                 ])
             ]);
             execution.end(false, Date.now());
-            return;
+            return false;
         }
 
         const query = cell.document.getText();
         
         try {
-            const result = await MindsDBClient.runQuery(query);
+            const result = await MindsDBClient.runQuery(query) as any;
+            
+            // Check if there's an error field in the result (some SDK versions return error instead of throwing)
+            if (result.error || result.error_message) {
+                throw new Error(result.error || result.error_message);
+            }
             
             // Render the results into a beautiful markdown table and json payload 
             if (result.rows && result.rows.length > 0) {
@@ -109,7 +117,15 @@ export class MindsDBNotebookController {
                 let markdownTable = `| ${columns.join(' | ')} |\n| ${columns.map(() => '---').join(' | ')} |\n`;
                 
                 result.rows.forEach((row: any) => {
-                    markdownTable += `| ${columns.map(c => typeof row[c] === 'object' ? JSON.stringify(row[c]) : row[c]).join(' | ')} |\n`;
+                    markdownTable += `| ${columns.map(c => {
+                        let val = row[c];
+                        if (typeof val === 'object') {
+                            return val === null ? 'null' : JSON.stringify(val);
+                        } else if (typeof val === 'string') {
+                            return val.replace(/\|/g, '\\|').replace(/\r?\n/g, '<br>');
+                        }
+                        return String(val);
+                    }).join(' | ')} |\n`;
                 });
 
                 // Set multiple formats, VS Code defaults to markdown natively if available
@@ -123,20 +139,24 @@ export class MindsDBNotebookController {
             } else {
                 execution.replaceOutput([
                     new vscode.NotebookCellOutput([
-                        vscode.NotebookCellOutputItem.text("Query returned 0 rows.", 'text/plain')
+                        vscode.NotebookCellOutputItem.text("Query executed successfully, but returned 0 rows.", 'text/plain')
                     ])
                 ]);
             }
 
             execution.end(true, Date.now());
+            // Refresh tree views after successful execution
+            vscode.commands.executeCommand('mindsdb.refreshConnections');
+            return true;
         } catch (err: any) {
             console.error("Query Execution Error", err);
             execution.replaceOutput([
                 new vscode.NotebookCellOutput([
-                    vscode.NotebookCellOutputItem.error(err as Error)
+                    vscode.NotebookCellOutputItem.text(`Error: ${err.message || err}`, 'text/plain')
                 ])
             ]);
             execution.end(false, Date.now());
+            return false;
         }
     }
 

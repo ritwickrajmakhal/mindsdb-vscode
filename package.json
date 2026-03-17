@@ -9,7 +9,6 @@
   "categories": [
     "Other"
   ],
-
   "main": "./dist/extension.js",
   "contributes": {
     "viewsContainers": {
@@ -18,6 +17,11 @@
           "id": "mindsdb-explorer",
           "title": "MindsDB",
           "icon": "resources/mindsdb-icon.svg"
+        },
+        {
+          "id": "mindsdb-chat-container",
+          "title": "MindsDB Chat",
+          "icon": "resources/mindsdb-chat-icon.png"
         }
       ]
     },
@@ -38,6 +42,14 @@
           "name": "Datasources",
           "icon": "resources/mindsdb-icon.svg"
         }
+      ],
+      "mindsdb-chat-container": [
+        {
+          "type": "webview",
+          "id": "mindsdb.chatView",
+          "name": "MindsDB Chat",
+          "icon": "resources/mindsdb-chat-icon.png"
+        }
       ]
     },
     "commands": [
@@ -48,8 +60,8 @@
       },
       {
         "command": "mindsdb.deleteConnection",
-        "title": "Delete Connection",
-        "icon": "$(trash)"
+        "title": "Disconnect",
+        "icon": "$(debug-disconnect)"
       },
       {
         "command": "mindsdb.refreshConnections",
@@ -60,18 +72,98 @@
         "command": "mindsdb.newNotebook",
         "title": "New MindsDB Notebook",
         "shortTitle": "New Notebook"
+      },
+      {
+        "command": "mindsdb.uploadFile",
+        "title": "Upload File",
+        "icon": "$(add)"
+      },
+      {
+        "command": "mindsdb.deleteProjectItem",
+        "title": "Delete",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "mindsdb.deleteProject",
+        "title": "Delete Project",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "mindsdb.createProject",
+        "title": "Create Project",
+        "icon": "$(add)"
+      },
+      {
+        "command": "mindsdb.deleteDatasource",
+        "title": "Delete Datasource",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "mindsdb.deleteFile",
+        "title": "Delete File",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "mindsdb.createAgent",
+        "title": "Create Agent",
+        "icon": "$(add)"
+      },
+      {
+        "command": "mindsdb.createJob",
+        "title": "Create Job",
+        "icon": "$(add)"
+      },
+      {
+        "command": "mindsdb.createKnowledgeBase",
+        "title": "Create Knowledge Base",
+        "icon": "$(add)"
+      },
+      {
+        "command": "mindsdb.createModel",
+        "title": "Create Model",
+        "icon": "$(add)"
+      },
+      {
+        "command": "mindsdb.createView",
+        "title": "Create View",
+        "icon": "$(add)"
+      },
+      {
+        "command": "mindsdb.showIntegrations",
+        "title": "Browse Integrations",
+        "icon": "$(search)"
+      },
+      {
+        "command": "mindsdb.showDocumentation",
+        "title": "Help",
+        "icon": "$(question)"
       }
     ],
     "menus": {
       "view/title": [
         {
           "command": "mindsdb.addConnection",
-          "when": "view == mindsdb-system",
+          "when": "view == mindsdb-system && !mindsdb.connected",
+          "group": "navigation"
+        },
+        {
+          "command": "mindsdb.deleteConnection",
+          "when": "view == mindsdb-system && mindsdb.connected",
           "group": "navigation"
         },
         {
           "command": "mindsdb.refreshConnections",
           "when": "view == mindsdb-system",
+          "group": "navigation"
+        },
+        {
+          "command": "mindsdb.createProject",
+          "when": "view == mindsdb-projects",
+          "group": "navigation"
+        },
+        {
+          "command": "mindsdb.showIntegrations",
+          "when": "view == mindsdb-datasources",
           "group": "navigation"
         }
       ],
@@ -80,6 +172,121 @@
           "command": "mindsdb.deleteConnection",
           "when": "viewItem == connection",
           "group": "inline"
+        },
+        {
+          "command": "mindsdb.deleteProjectItem",
+          "when": "viewItem == project-item",
+          "group": "inline"
+        },
+        {
+          "command": "mindsdb.deleteProjectItem",
+          "when": "viewItem == project-item",
+          "group": "1_modification"
+        },
+        {
+          "command": "mindsdb.deleteProject",
+          "when": "viewItem == project-deletable",
+          "group": "inline"
+        },
+        {
+          "command": "mindsdb.deleteProject",
+          "when": "viewItem == project-deletable",
+          "group": "1_modification"
+        },
+        {
+          "command": "mindsdb.showDocumentation",
+          "when": "viewItem == project || viewItem == project-deletable",
+          "group": "2_help"
+        },
+        {
+          "command": "mindsdb.deleteDatasource",
+          "when": "viewItem == database-deletable",
+          "group": "inline"
+        },
+        {
+          "command": "mindsdb.deleteDatasource",
+          "when": "viewItem == database-deletable",
+          "group": "1_modification"
+        },
+        {
+          "command": "mindsdb.showDocumentation",
+          "when": "viewItem == database || viewItem == database-deletable || viewItem == database-files || viewItem == file-table",
+          "group": "2_help"
+        },
+        {
+          "command": "mindsdb.uploadFile",
+          "when": "viewItem == database-files",
+          "group": "inline"
+        },
+        {
+          "command": "mindsdb.uploadFile",
+          "when": "viewItem == database-files",
+          "group": "1_modification"
+        },
+        {
+          "command": "mindsdb.deleteFile",
+          "when": "viewItem == file-table",
+          "group": "inline"
+        },
+        {
+          "command": "mindsdb.deleteFile",
+          "when": "viewItem == file-table",
+          "group": "1_modification"
+        },
+        {
+          "command": "mindsdb.createAgent",
+          "when": "viewItem == project-folder-agents",
+          "group": "inline"
+        },
+        {
+          "command": "mindsdb.createAgent",
+          "when": "viewItem == project-folder-agents",
+          "group": "1_modification"
+        },
+        {
+          "command": "mindsdb.createJob",
+          "when": "viewItem == project-folder-jobs",
+          "group": "inline"
+        },
+        {
+          "command": "mindsdb.createJob",
+          "when": "viewItem == project-folder-jobs",
+          "group": "1_modification"
+        },
+        {
+          "command": "mindsdb.createKnowledgeBase",
+          "when": "viewItem == project-folder-knowledge_bases",
+          "group": "inline"
+        },
+        {
+          "command": "mindsdb.createKnowledgeBase",
+          "when": "viewItem == project-folder-knowledge_bases",
+          "group": "1_modification"
+        },
+        {
+          "command": "mindsdb.createModel",
+          "when": "viewItem == project-folder-models",
+          "group": "inline"
+        },
+        {
+          "command": "mindsdb.createModel",
+          "when": "viewItem == project-folder-models",
+          "group": "1_modification"
+        },
+        {
+          "command": "mindsdb.createView",
+          "when": "viewItem == project-folder-views",
+          "group": "inline"
+        },
+        {
+          "command": "mindsdb.createView",
+          "when": "viewItem == project-folder-views",
+          "group": "1_modification"
+        },
+        {
+          "command": "mindsdb.showDocumentation",
+          "when": "viewItem =~ /project-folder-.*/ || viewItem == project-item",
+          "group": "2_help"
         }
       ],
       "commandPalette": [
@@ -118,6 +325,7 @@
     "test": "vscode-test"
   },
   "devDependencies": {
+    "@types/marked": "^5.0.2",
     "@types/mocha": "^10.0.10",
     "@types/node": "22.x",
     "@types/vscode": "^1.110.0",
@@ -130,6 +338,8 @@
     "typescript-eslint": "^8.56.1"
   },
   "dependencies": {
+    "axios": "^1.13.6",
+    "marked": "^17.0.4",
     "mindsdb-js-sdk": "^2.3.2"
   }
 }
