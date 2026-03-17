@@ -77,13 +77,13 @@ export function activate(context: vscode.ExtensionContext) {
                     prompt: 'Enter Username',
                     placeHolder: 'mindsdb'
                 });
-                if (user === undefined) return; // User cancelled
+                if (user === undefined) {return;} // User cancelled
 
                 password = await vscode.window.showInputBox({
                     prompt: 'Enter Password',
                     password: true
                 });
-                if (password === undefined) return; // User cancelled
+                if (password === undefined) {return;} // User cancelled
             }
 
             try {
@@ -111,7 +111,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     context.subscriptions.push(vscode.commands.registerCommand('mindsdb.deleteProject', async (node: ConnectionItem) => {
         const label = typeof node.label === 'string' ? node.label : node.label?.label;
-        if (!label || label === 'mindsdb') return;
+        if (!label || label === 'mindsdb') {return;}
 
         const confirm = await vscode.window.showWarningMessage(
             `Are you sure you want to delete the project "${label}"? This will delete all models, views, and data within it.`,
@@ -149,16 +149,16 @@ export function activate(context: vscode.ExtensionContext) {
         if (confirm === 'Delete') {
             try {
                 let dropType = itemType.toUpperCase().replace('S', ''); // basic plural to singular
-                if (itemType === 'knowledge_bases') dropType = 'KNOWLEDGE_BASE';
-                if (itemType === 'queries') dropType = 'VIEW'; // backup for views if needed
+                if (itemType === 'knowledge_bases') {dropType = 'KNOWLEDGE_BASE';}
+                if (itemType === 'queries') {dropType = 'VIEW';} // backup for views if needed
                 
                 // Specific drop commands as requested
                 let query = `DROP ${dropType.replace('_S', 'S')} ${project}.${label}`;
-                if (itemType === 'agents') query = `DROP AGENT ${project}.${label}`;
-                if (itemType === 'jobs') query = `DROP JOB ${project}.${label}`;
-                if (itemType === 'knowledge_bases') query = `DROP KNOWLEDGE_BASE ${project}.${label}`;
-                if (itemType === 'models') query = `DROP MODEL ${project}.${label}`;
-                if (itemType === 'views') query = `DROP VIEW ${project}.${label}`;
+                if (itemType === 'agents') {query = `DROP AGENT ${project}.${label}`;}
+                if (itemType === 'jobs') {query = `DROP JOB ${project}.${label}`;}
+                if (itemType === 'knowledge_bases') {query = `DROP KNOWLEDGE_BASE ${project}.${label}`;}
+                if (itemType === 'models') {query = `DROP MODEL ${project}.${label}`;}
+                if (itemType === 'views') {query = `DROP VIEW ${project}.${label}`;}
 
                 await MindsDBClient.runQuery(query);
                 vscode.window.showInformationMessage(`Deleted ${itemType.replace('_', ' ')} "${label}"`);
@@ -221,7 +221,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     context.subscriptions.push(vscode.commands.registerCommand('mindsdb.deleteDatasource', async (node: ConnectionItem) => {
         const label = typeof node.label === 'string' ? node.label : node.label?.label;
-        if (!label || label === 'files') return;
+        if (!label || label === 'files') {return;}
 
         const confirm = await vscode.window.showWarningMessage(
             `Are you sure you want to delete the datasource "${label}"?`,
@@ -242,7 +242,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     context.subscriptions.push(vscode.commands.registerCommand('mindsdb.deleteFile', async (node: ConnectionItem) => {
         const label = typeof node.label === 'string' ? node.label : node.label?.label;
-        if (!label) return;
+        if (!label) {return;}
 
         const confirm = await vscode.window.showWarningMessage(
             `Are you sure you want to delete the file "${label}"?`,
@@ -263,7 +263,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     context.subscriptions.push(vscode.commands.registerCommand('mindsdb.showDocumentation', async (node: ConnectionItem) => {
         const label = typeof node.label === 'string' ? node.label : node.label?.label;
-        if (!label) return;
+        if (!label) {return;}
 
         const contextValue = node.contextValue;
         let url = 'https://raw.githubusercontent.com/mindsdb/mindsdb/staging/docs/what-is-mindsdb.md';

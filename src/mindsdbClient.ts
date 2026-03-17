@@ -69,7 +69,7 @@ export class MindsDBClient {
     }
 
     static async getSystemDatabases(): Promise<any[]> {
-        if (!this.isConnected()) return [];
+        if (!this.isConnected()) {return [];}
         try {
             const dbs = await MindsDB.Databases.getAllDatabases();
             return dbs.filter(d => d.name === 'information_schema' || d.name === 'log');
@@ -80,7 +80,7 @@ export class MindsDBClient {
     }
 
     static async getProjects(): Promise<any[]> {
-        if (!this.isConnected()) return [];
+        if (!this.isConnected()) {return [];}
         try {
             return await MindsDB.Projects.getAllProjects();
         } catch (e) {
@@ -90,7 +90,7 @@ export class MindsDBClient {
     }
 
     static async getDatasources(): Promise<any[]> {
-        if (!this.isConnected()) return [];
+        if (!this.isConnected()) {return [];}
         try {
             const query = "SHOW FULL DATABASES WHERE type = 'data'";
             const result = await MindsDB.SQL.runQuery(query);
@@ -102,14 +102,14 @@ export class MindsDBClient {
     }
 
     static async runQuery(query: string) {
-        if (!this.isConnected()) throw new Error("Not connected to MindsDB. Please connect first.");
+        if (!this.isConnected()) {throw new Error("Not connected to MindsDB. Please connect first.");}
         return await MindsDB.SQL.runQuery(query);
     }
 
     static async uploadFile(filePath: string, fileName: string): Promise<boolean> {
-        if (!this.isConnected()) throw new Error("Not connected to MindsDB. Please connect first.");
+        if (!this.isConnected()) {throw new Error("Not connected to MindsDB. Please connect first.");}
         const baseUrl = this.connectionHost?.replace(/\/+$/, '');
-        if (!baseUrl) throw new Error("No host URL found.");
+        if (!baseUrl) {throw new Error("No host URL found.");}
         
         try {
             const fs = await import('fs/promises');
@@ -145,7 +145,7 @@ export class MindsDBClient {
     }
 
     static async getProjectItems(project: string, type: string): Promise<any[]> {
-        if (!this.isConnected()) return [];
+        if (!this.isConnected()) {return [];}
         try {
             // Mapping UI folder names to query types
             const queryMap: { [key: string]: string } = {

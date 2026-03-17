@@ -92,8 +92,8 @@ export class ChatProvider implements vscode.WebviewViewProvider {
                                         result.rows.forEach((row: any) => {
                                             rawAnswer += `| ${columns.map(col => {
                                                 const val = row[col];
-                                                if (val === null || val === undefined) return '';
-                                                if (typeof val === 'object') return JSON.stringify(val);
+                                                if (val === null || val === undefined) {return '';}
+                                                if (typeof val === 'object') {return JSON.stringify(val);}
                                                 return String(val);
                                             }).join(' | ')} |\n`;
                                         });
@@ -101,7 +101,7 @@ export class ChatProvider implements vscode.WebviewViewProvider {
                                 }
                             }
 
-                            if (!rawAnswer) rawAnswer = "Agent returned no answer.";
+                            if (!rawAnswer) {rawAnswer = "Agent returned no answer.";}
                             
                             // Render markdown on the extension side using dynamic import for ESM module
                             const { marked } = await import('marked');

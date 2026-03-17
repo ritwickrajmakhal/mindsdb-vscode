@@ -47,8 +47,8 @@ export class MindsDBTreeProvider implements vscode.TreeDataProvider<ConnectionIt
                     const items = await MindsDBClient.getSystemDatabases();
                     return items.map(item => {
                         let icon = 'database';
-                        if (item.name === 'information_schema') icon = 'symbol-structure';
-                        if (item.name === 'log') icon = 'terminal';
+                        if (item.name === 'information_schema') {icon = 'symbol-structure';}
+                        if (item.name === 'log') {icon = 'terminal';}
                         
                         return new ConnectionItem(
                             item.name, 
@@ -140,7 +140,7 @@ export class MindsDBTreeProvider implements vscode.TreeDataProvider<ConnectionIt
 
         if (element.contextValue.startsWith('project-folder')) {
             const project = element.projectName;
-            if (!project) return [];
+            if (!project) {return [];}
             
             const type = label || '';
             const items = await MindsDBClient.getProjectItems(project, type);
@@ -152,21 +152,21 @@ export class MindsDBTreeProvider implements vscode.TreeDataProvider<ConnectionIt
             return items.map(item => {
                 let name = item.name || item.database || item.model_name || item.TABLE_NAME;
                 // Some queries return results in different formats
-                if (type === 'views') name = item.name || item.table_name;
+                if (type === 'views') {name = item.name || item.table_name;}
                 
                 let query = '';
-                if (type === 'agents') query = `DESCRIBE AGENT ${project}.${name};`;
-                if (type === 'jobs') query = `SELECT * FROM information_schema.JOBS WHERE name = '${name}';`;
-                if (type === 'models') query = `DESCRIBE ${project}.${name};`;
-                if (type === 'knowledge_bases') query = `DESCRIBE KNOWLEDGE_BASE ${project}.${name};`;
-                if (type === 'views') query = `SELECT * FROM ${project}.${name} LIMIT 10;`;
+                if (type === 'agents') {query = `DESCRIBE AGENT ${project}.${name};`;}
+                if (type === 'jobs') {query = `SELECT * FROM information_schema.JOBS WHERE name = '${name}';`;}
+                if (type === 'models') {query = `DESCRIBE ${project}.${name};`;}
+                if (type === 'knowledge_bases') {query = `DESCRIBE KNOWLEDGE_BASE ${project}.${name};`;}
+                if (type === 'views') {query = `SELECT * FROM ${project}.${name} LIMIT 10;`;}
 
                 let icon = 'symbol-field';
-                if (type === 'agents') icon = 'account';
-                if (type === 'jobs') icon = 'play';
-                if (type === 'models') icon = 'symbol-class';
-                if (type === 'knowledge_bases') icon = 'book';
-                if (type === 'views') icon = 'table';
+                if (type === 'agents') {icon = 'account';}
+                if (type === 'jobs') {icon = 'play';}
+                if (type === 'models') {icon = 'symbol-class';}
+                if (type === 'knowledge_bases') {icon = 'book';}
+                if (type === 'views') {icon = 'table';}
 
                 return new ConnectionItem(
                     name,
