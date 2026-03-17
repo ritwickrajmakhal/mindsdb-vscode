@@ -1,71 +1,81 @@
-# mindsdb README
+# MindsDB VS Code Extension
 
-This is the README for your extension "mindsdb". After writing up a brief description, we recommend including the following sections.
+A powerful VS Code extension for seamlessly integrating MindsDB into your development workflow. MindsDB is an open-source query engine that enables AI analytics, allowing AI agents to answer questions directly from databases and data warehouses without ETL.
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+* **Connection Management** - Easily connect to MindsDB instances and manage multiple connections with secure credential storage
+* **Database Explorer** - Browse System, Projects, and Datasources in dedicated tree views
+* **MindsDB Notebooks** - Create and execute interactive notebooks for AI-powered queries directly in VS Code
+* **Chat Interface** - Interactive chat view to query and explore your data using natural language
+* **Project Management** - Create, manage, and delete projects within MindsDB
+* **Datasource Management** - Browse, upload, and manage datasources
+* **Auto-Reconnect** - Automatically reconnect to your last used MindsDB instance on startup
+* **Secure Credential Storage** - Passwords stored securely using VS Code's secrets management
 
-For example if there is an image subfolder under your extension project workspace:
+## Getting Started
 
-\!\[feature X\]\(images/feature-x.png\)
+### Requirements
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+* VS Code 1.110.0 or later
+* Access to a running MindsDB instance (local or remote)
+* Network connectivity to your MindsDB server
 
-## Requirements
+### Installation
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+1. Install the MindsDB extension from the VS Code Marketplace
+2. Click the MindsDB icon in the Activity Bar to open the explorer
+3. Click "Add Connection" to connect to your MindsDB instance
+4. Enter your MindsDB host URL (e.g., `http://localhost:47334` or your remote URL)
+5. Provide your username and password
 
-## Extension Settings
+### Basic Usage
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+**Adding a Connection:**
+- Click the `+` icon in the MindsDB explorer
+- Enter your connection details (host, username, password)
+- Credentials are securely stored and automatically restore on restart
 
-For example:
+**Creating a Notebook:**
+- Click "New MindsDB Notebook" command or use the context menu
+- Write and execute MindsDB SQL queries
 
-This extension contributes the following settings:
+**Using Chat:**
+- Open the MindsDB Chat view from the activity bar
+- Ask natural language questions about your data
+- The extension handles query translation and execution
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+**Managing Projects:**
+- View all projects in the Projects tree
+- Create new projects with the create button
+- Delete projects with the delete option
 
-## Known Issues
+**Managing Datasources:**
+- Browse available datasources in the Datasources tree
+- Upload new files or data sources
+- Delete datasources you no longer need
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+## Extension Commands
 
-## Release Notes
+* `mindsdb.addConnection` - Add a new MindsDB connection
+* `mindsdb.deleteConnection` - Disconnect from MindsDB
+* `mindsdb.refreshConnections` - Refresh the explorer views
+* `mindsdb.newNotebook` - Create a new MindsDB notebook
+* `mindsdb.uploadFile` - Upload a file as a datasource
+* `mindsdb.createProject` - Create a new project
+* `mindsdb.deleteProject` - Delete a project
+* `mindsdb.deleteDatasource` - Delete a datasource
 
-Users appreciate release notes as you update your extension.
+## Support & Issues
 
-### 1.0.0
+For bug reports, feature requests, or general support, please visit the [GitHub repository](https://github.com/ritwickrajmakhal/mindsdb-vscode).
 
-Initial release of ...
+## Learn More
 
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
+* [MindsDB Documentation](https://docs.mindsdb.com)
+* [MindsDB JavaScript SDK](https://github.com/mindsdb/mindsdb-js-sdk)
+* [VS Code Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
 
 ---
 
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+**Enjoy building AI-powered applications with MindsDB!**
