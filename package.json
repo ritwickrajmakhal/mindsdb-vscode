@@ -3,6 +3,11 @@
   "displayName": "MindsDB",
   "description": "MindsDB is a popular open-source query engine for AI analytics, powering AI agents that need to answer questions directly from databases, data warehouses, and applications, with no ETL required.",
   "version": "0.0.1",
+  "repository": {
+    "url": "https://github.com/ritwickrajmakhal/mindsdb-vscode"
+  },
+  "icon": "resources/mindsdb-icon-128x128.png",
+  "publisher": "ritwickrajmakhal",
   "engines": {
     "vscode": "^1.110.0"
   },
