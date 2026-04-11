@@ -1,9 +1,6 @@
 # Change Log
 
-All notable changes to the "mindsdb" extension will be documented in this file.
-
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
-
-## [Unreleased]
-
-- Initial release
+| Version | Date | Notes |
+| --- | --- | --- |
+| 0.0.2 | 2026-04-11 | Clean offline sidebar behavior; auto-disconnect on offline/network failures; connection health-check; README cleanup. |
+| 0.0.1 | 2026-04-06 | Initial release. |

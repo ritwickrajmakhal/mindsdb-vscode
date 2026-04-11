@@ -79,7 +79,7 @@ export class MindsDBTreeProvider implements vscode.TreeDataProvider<ConnectionIt
                 }
                 return [];
             } catch (error) {
-                vscode.window.showErrorMessage(`Error fetching ${this.type}: ` + error);
+                console.warn(`Failed to fetch ${this.type} tree items:`, error);
                 return [];
             }
         }
@@ -143,7 +143,13 @@ export class MindsDBTreeProvider implements vscode.TreeDataProvider<ConnectionIt
             if (!project) {return [];}
             
             const type = label || '';
-            const items = await MindsDBClient.getProjectItems(project, type);
+            let items: any[] = [];
+            try {
+                items = await MindsDBClient.getProjectItems(project, type);
+            } catch (error) {
+                console.warn(`Failed to fetch ${type} for project ${project}:`, error);
+                return [];
+            }
             
             if (items.length === 0) {
                 return [new ConnectionItem('empty', vscode.TreeItemCollapsibleState.None, 'empty', 'none')];
@@ -217,7 +223,7 @@ export class MindsDBTreeProvider implements vscode.TreeDataProvider<ConnectionIt
                 });
 
             } catch (error) {
-                vscode.window.showErrorMessage(`Error fetching tables for ${label}: ` + error);
+                console.warn(`Failed to fetch tables for datasource ${label}:`, error);
                 return [];
             }
         }

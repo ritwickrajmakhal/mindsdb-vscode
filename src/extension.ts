@@ -28,6 +28,12 @@ export function activate(context: vscode.ExtensionContext) {
         vscode.commands.executeCommand('setContext', 'mindsdb.connected', MindsDBClient.isConnected());
     };
 
+    const unsubscribeConnectionState = MindsDBClient.onConnectionStateChanged(() => {
+        updateConnectionContext();
+        refreshAll();
+    });
+    context.subscriptions.push({ dispose: unsubscribeConnectionState });
+
     // Auto-reconnect on startup
     const storedHost = context.globalState.get<string>('mindsdb.host');
     const storedUser = context.globalState.get<string>('mindsdb.user');

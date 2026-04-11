@@ -1,81 +1,113 @@
-# MindsDB VS Code Extension
+# MindsDB for VS Code
 
-A powerful VS Code extension for seamlessly integrating MindsDB into your development workflow. MindsDB is an open-source query engine that enables AI analytics, allowing AI agents to answer questions directly from databases and data warehouses without ETL.
+Query, manage, and explore MindsDB directly from VS Code.
 
-## Features
+This extension brings your MindsDB workspace into the editor with explorer views, notebooks, and chat-driven workflows so you can move from idea to query fast.
 
-* **Connection Management** - Easily connect to MindsDB instances and manage multiple connections with secure credential storage
-* **Database Explorer** - Browse System, Projects, and Datasources in dedicated tree views
-* **MindsDB Notebooks** - Create and execute interactive notebooks for AI-powered queries directly in VS Code
-* **Chat Interface** - Interactive chat view to query and explore your data using natural language
-* **Project Management** - Create, manage, and delete projects within MindsDB
-* **Datasource Management** - Browse, upload, and manage datasources
-* **Auto-Reconnect** - Automatically reconnect to your last used MindsDB instance on startup
-* **Secure Credential Storage** - Passwords stored securely using VS Code's secrets management
+## Demo
 
-## Getting Started
+![MindsDB VS Code Demo (placeholder)](resources/demo-placeholder.gif)
 
-### Requirements
+> Replace `resources/demo-placeholder.gif` with your recorded product walkthrough GIF.
 
-* VS Code 1.110.0 or later
-* Access to a running MindsDB instance (local or remote)
-* Network connectivity to your MindsDB server
+## Step-by-Step GIF Placeholders
 
-### Installation
+### 1. Add Connection
 
-1. Install the MindsDB extension from the VS Code Marketplace
-2. Click the MindsDB icon in the Activity Bar to open the explorer
-3. Click "Add Connection" to connect to your MindsDB instance
-4. Enter your MindsDB host URL (e.g., `http://localhost:47334` or your remote URL)
-5. Provide your username and password
+![Step 1 - Add Connection (placeholder)](resources/demo-step-1-add-connection.gif)
 
-### Basic Usage
+### 2. Explore System, Projects, and Datasources
 
-**Adding a Connection:**
-- Click the `+` icon in the MindsDB explorer
-- Enter your connection details (host, username, password)
-- Credentials are securely stored and automatically restore on restart
+![Step 2 - Explore Sidebar (placeholder)](resources/demo-step-2-explore-sidebar.gif)
 
-**Creating a Notebook:**
-- Click "New MindsDB Notebook" command or use the context menu
-- Write and execute MindsDB SQL queries
+### 3. Create and Run a Notebook Query
 
-**Using Chat:**
-- Open the MindsDB Chat view from the activity bar
-- Ask natural language questions about your data
-- The extension handles query translation and execution
+![Step 3 - Notebook Query (placeholder)](resources/demo-step-3-notebook-query.gif)
 
-**Managing Projects:**
-- View all projects in the Projects tree
-- Create new projects with the create button
-- Delete projects with the delete option
+### 4. Ask Questions in Chat
 
-**Managing Datasources:**
-- Browse available datasources in the Datasources tree
-- Upload new files or data sources
-- Delete datasources you no longer need
+![Step 4 - Chat Workflow (placeholder)](resources/demo-step-4-chat.gif)
 
-## Extension Commands
+### 5. Upload a File and Manage Datasources
 
-* `mindsdb.addConnection` - Add a new MindsDB connection
-* `mindsdb.deleteConnection` - Disconnect from MindsDB
-* `mindsdb.refreshConnections` - Refresh the explorer views
-* `mindsdb.newNotebook` - Create a new MindsDB notebook
-* `mindsdb.uploadFile` - Upload a file as a datasource
-* `mindsdb.createProject` - Create a new project
-* `mindsdb.deleteProject` - Delete a project
-* `mindsdb.deleteDatasource` - Delete a datasource
+![Step 5 - Upload and Manage Datasource (placeholder)](resources/demo-step-5-datasource.gif)
 
-## Support & Issues
+> Suggested GIF names:
+> - `resources/demo-step-1-add-connection.gif`
+> - `resources/demo-step-2-explore-sidebar.gif`
+> - `resources/demo-step-3-notebook-query.gif`
+> - `resources/demo-step-4-chat.gif`
+> - `resources/demo-step-5-datasource.gif`
 
-For bug reports, feature requests, or general support, please visit the [GitHub repository](https://github.com/ritwickrajmakhal/mindsdb-vscode).
+## Highlights
 
-## Learn More
+- Connection management with secure credential storage
+- Explorer views for System, Projects, and Datasources
+- MindsDB notebooks for interactive SQL workflows
+- Chat interface for natural language exploration
+- Project and datasource management actions
+- Auto-reconnect on VS Code startup
 
-* [MindsDB Documentation](https://docs.mindsdb.com)
-* [MindsDB JavaScript SDK](https://github.com/mindsdb/mindsdb-js-sdk)
-* [VS Code Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
+## Requirements
+
+- VS Code 1.110.0 or later
+- Access to a running MindsDB instance
+- Network connectivity to your MindsDB server
+
+## Quick Start
+
+1. Install the extension from VS Code Marketplace.
+2. Open the MindsDB icon in the Activity Bar.
+3. Select Add Connection.
+4. Enter your host URL, for example `http://127.0.0.1:47334`.
+5. Provide credentials if required.
+
+## Core Workflows
+
+### Connect to MindsDB
+
+- Select the plus icon in the MindsDB explorer.
+- Enter host, username, and password details.
+- Credentials are stored securely and restored on restart.
+
+### Create and Run Notebooks
+
+- Run the New MindsDB Notebook command.
+- Write SQL cells and execute directly in VS Code.
+
+### Use Chat
+
+- Open MindsDB Chat from the Activity Bar.
+- Ask questions in natural language to explore data.
+
+### Manage Projects and Datasources
+
+- Create and delete projects from the Projects tree.
+- Upload and remove files or datasources from Datasources.
+
+## Commands
+
+- `mindsdb.addConnection`: Add a new MindsDB connection
+- `mindsdb.deleteConnection`: Disconnect from MindsDB
+- `mindsdb.refreshConnections`: Refresh explorer views
+- `mindsdb.newNotebook`: Create a new MindsDB notebook
+- `mindsdb.uploadFile`: Upload a file as a datasource
+- `mindsdb.createProject`: Create a project
+- `mindsdb.deleteProject`: Delete a project
+- `mindsdb.deleteDatasource`: Delete a datasource
+
+## Links
+
+- [MindsDB Documentation](https://docs.mindsdb.com)
+- [MindsDB JavaScript SDK](https://github.com/mindsdb/mindsdb-js-sdk)
+- [Repository and Issues](https://github.com/ritwickrajmakhal/mindsdb-vscode)
+
+## Contributors
+
+Thanks to everyone who contributes to this project.
+
+[![Contributors](https://contrib.rocks/image?repo=ritwickrajmakhal/mindsdb-vscode)](https://github.com/ritwickrajmakhal/mindsdb-vscode/graphs/contributors)
 
 ---
 
-**Enjoy building AI-powered applications with MindsDB!**
+Build AI-native data workflows with MindsDB in your editor.

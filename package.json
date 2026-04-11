@@ -1,8 +1,8 @@
 {
-  "name": "mindsdb",
-  "displayName": "MindsDB",
+  "name": "mindsdb-vscode",
+  "displayName": "MindsDB for VS Code",
   "description": "MindsDB is a popular open-source query engine for AI analytics, powering AI agents that need to answer questions directly from databases, data warehouses, and applications, with no ETL required.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "repository": {
     "url": "https://github.com/ritwickrajmakhal/mindsdb-vscode"
   },

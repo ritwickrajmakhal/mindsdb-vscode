@@ -4,6 +4,52 @@ export class MindsDBClient {
     private static connectionHost: string | undefined;
     private static user: string | undefined;
     private static password: string | undefined;
+    private static connectionStateListeners = new Set<(connected: boolean) => void>();
+
+    static onConnectionStateChanged(listener: (connected: boolean) => void): () => void {
+        this.connectionStateListeners.add(listener);
+        return () => {
+            this.connectionStateListeners.delete(listener);
+        };
+    }
+
+    private static notifyConnectionStateChanged() {
+        const connected = this.isConnected();
+        for (const listener of this.connectionStateListeners) {
+            try {
+                listener(connected);
+            } catch (e) {
+                console.error('MindsDB connection state listener error:', e);
+            }
+        }
+    }
+
+    private static isOfflineError(error: any): boolean {
+        const code = String(error?.code || error?.cause?.code || '').toUpperCase();
+        if (['ECONNREFUSED', 'ENOTFOUND', 'EHOSTUNREACH', 'ETIMEDOUT', 'ECONNRESET'].includes(code)) {
+            return true;
+        }
+
+        const message = String(error?.message || error || '').toLowerCase();
+        return (
+            message.includes('network error') ||
+            message.includes('fetch failed') ||
+            message.includes('failed to fetch') ||
+            message.includes('socket hang up') ||
+            message.includes('connect econnrefused') ||
+            message.includes('econnrefused') ||
+            message.includes('enotfound') ||
+            message.includes('ehostunreach') ||
+            message.includes('etimedout') ||
+            message.includes('connection refused')
+        );
+    }
+
+    private static handlePossibleOfflineError(error: any) {
+        if (this.isConnected() && this.isOfflineError(error)) {
+            this.disconnect();
+        }
+    }
 
     static async connect(host: string, user?: string, password?: string) {
         try {
@@ -40,11 +86,19 @@ export class MindsDBClient {
 
             // Provide a host, user, and password to the connect method
             await MindsDB.connect({ host, user: user || '', password: password || '', httpClient });
+
+            // Validate connectivity now (SDK connect can be lazy and not fail until first query).
+            await MindsDB.SQL.runQuery('SELECT 1;');
+
             this.connectionHost = host;
             this.user = user;
             this.password = token; // Store the token (or original password if no token returned)
+            this.notifyConnectionStateChanged();
             return true;
         } catch (error) {
+            this.connectionHost = undefined;
+            this.user = undefined;
+            this.password = undefined;
             console.error("MindsDB Connection Error:", error);
             throw error;
         }
@@ -63,9 +117,13 @@ export class MindsDBClient {
     }
 
     static disconnect() {
+        const wasConnected = this.isConnected();
         this.connectionHost = undefined;
         this.user = undefined;
         this.password = undefined;
+        if (wasConnected) {
+            this.notifyConnectionStateChanged();
+        }
     }
 
     static async getSystemDatabases(): Promise<any[]> {
@@ -74,6 +132,7 @@ export class MindsDBClient {
             const dbs = await MindsDB.Databases.getAllDatabases();
             return dbs.filter(d => d.name === 'information_schema' || d.name === 'log');
         } catch (e) {
+            this.handlePossibleOfflineError(e);
             console.error(e);
             return [];
         }
@@ -84,6 +143,7 @@ export class MindsDBClient {
         try {
             return await MindsDB.Projects.getAllProjects();
         } catch (e) {
+            this.handlePossibleOfflineError(e);
             console.error(e);
             return [];
         }
@@ -96,6 +156,7 @@ export class MindsDBClient {
             const result = await MindsDB.SQL.runQuery(query);
             return result.rows || [];
         } catch (e) {
+            this.handlePossibleOfflineError(e);
             console.error(e);
             return [];
         }
@@ -103,7 +164,12 @@ export class MindsDBClient {
 
     static async runQuery(query: string) {
         if (!this.isConnected()) {throw new Error("Not connected to MindsDB. Please connect first.");}
-        return await MindsDB.SQL.runQuery(query);
+        try {
+            return await MindsDB.SQL.runQuery(query);
+        } catch (error) {
+            this.handlePossibleOfflineError(error);
+            throw error;
+        }
     }
 
     static async uploadFile(filePath: string, fileName: string): Promise<boolean> {
@@ -139,6 +205,7 @@ export class MindsDBClient {
             }
             return true;
         } catch (error) {
+            this.handlePossibleOfflineError(error);
             console.error("Error uploading file:", error);
             throw error;
         }
@@ -159,9 +226,9 @@ export class MindsDBClient {
             const query = `SHOW ${typeKey} FROM ${project}`;
             const result = await MindsDB.SQL.runQuery(query) as any;
             return result.rows || [];
-        } catch (e) {
-            console.error(`Error fetching ${type} from project ${project}:`, e);
-            return [];
+        } catch (error) {
+            this.handlePossibleOfflineError(error);
+            throw error;
         }
     }
 }
