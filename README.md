@@ -6,38 +6,29 @@ This extension brings your MindsDB workspace into the editor with explorer views
 
 ## Demo
 
-![MindsDB VS Code Demo (placeholder)](resources/demo-placeholder.gif)
-
-> Replace `resources/demo-placeholder.gif` with your recorded product walkthrough GIF.
-
-## Step-by-Step GIF Placeholders
-
 ### 1. Add Connection
 
-![Step 1 - Add Connection (placeholder)](resources/demo-step-1-add-connection.gif)
+![demo-step-1-add-connection](https://github.com/user-attachments/assets/63652533-ce3a-43a4-9f7d-481443358ce8)
 
 ### 2. Explore System, Projects, and Datasources
 
-![Step 2 - Explore Sidebar (placeholder)](resources/demo-step-2-explore-sidebar.gif)
+![demo-step-2-explore-sidebar](https://github.com/user-attachments/assets/bfa5956f-29e7-4ce7-8238-e9ae0c27592b)
 
 ### 3. Create and Run a Notebook Query
 
-![Step 3 - Notebook Query (placeholder)](resources/demo-step-3-notebook-query.gif)
+![demo-step-3-notebook-query](https://github.com/user-attachments/assets/18da5cce-b014-43c3-961d-f719386be88b)
 
-### 4. Ask Questions in Chat
+### 4. Upload a File and Manage Datasources
 
-![Step 4 - Chat Workflow (placeholder)](resources/demo-step-4-chat.gif)
+![demo-step-5-file-datasource](https://github.com/user-attachments/assets/0cc269e6-5ee5-4088-88d5-8c16b12a76ac)
 
-### 5. Upload a File and Manage Datasources
+### 5. Explore MindsDB Integrations
 
-![Step 5 - Upload and Manage Datasource (placeholder)](resources/demo-step-5-datasource.gif)
+![explore-docs](https://github.com/user-attachments/assets/916a38ff-7732-4de5-a808-eda22fac08e8)
 
-> Suggested GIF names:
-> - `resources/demo-step-1-add-connection.gif`
-> - `resources/demo-step-2-explore-sidebar.gif`
-> - `resources/demo-step-3-notebook-query.gif`
-> - `resources/demo-step-4-chat.gif`
-> - `resources/demo-step-5-datasource.gif`
+### 6. Ask Questions in Chat
+
+![demo-step-4-chat](https://github.com/user-attachments/assets/65460932-ebc8-4e1d-94df-aabccd6240ed)
 
 ## Highlights
 
