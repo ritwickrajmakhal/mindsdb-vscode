@@ -40,7 +40,7 @@ export class DocumentationPanel {
             const markdown = await this.fetchMarkdown(url);
             
             // Preprocess MDX/Markdown
-            const baseUrl = 'https://raw.githubusercontent.com/mindsdb/mindsdb/refs/heads/main/docs';
+            const baseUrl = 'https://raw.githubusercontent.com/mindsdb/minds-platform/refs/heads/main/docs';
             let processed = markdown
                 // Strip YAML frontmatter
                 .replace(/^---\n[\s\S]*?\n---\n/, '')

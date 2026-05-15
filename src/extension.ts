@@ -272,32 +272,32 @@ export function activate(context: vscode.ExtensionContext) {
         if (!label) {return;}
 
         const contextValue = node.contextValue;
-        let url = 'https://raw.githubusercontent.com/mindsdb/mindsdb/staging/docs/what-is-mindsdb.md';
+        let url = 'https://raw.githubusercontent.com/mindsdb/minds-platform/staging/docs/what-is-mindsdb.md';
         let title = 'MindsDB Documentation';
 
         if (label === 'files' || contextValue === 'file-table') {
-            url = 'https://raw.githubusercontent.com/mindsdb/mindsdb/refs/heads/main/docs/mindsdb_sql/sql/create/file.mdx';
+            url = 'https://raw.githubusercontent.com/mindsdb/minds-platform/refs/heads/main/docs/mindsdb_sql/sql/create/file.mdx';
             title = 'Upload a File';
         } else if (contextValue === 'project' || contextValue === 'project-deletable') {
-            url = 'https://raw.githubusercontent.com/mindsdb/mindsdb/refs/heads/main/docs/mindsdb_sql/sql/create/project.mdx';
+            url = 'https://raw.githubusercontent.com/mindsdb/minds-platform/refs/heads/main/docs/mindsdb_sql/sql/create/project.mdx';
             title = 'Create Project';
         } else if (contextValue === 'project-folder-agents' || (contextValue === 'project-item' && node.itemType === 'agents')) {
-            url = 'https://raw.githubusercontent.com/mindsdb/mindsdb/refs/heads/main/docs/mindsdb_sql/agents/agent.mdx';
+            url = 'https://raw.githubusercontent.com/mindsdb/minds-platform/refs/heads/main/docs/mindsdb_sql/agents/agent.mdx';
             title = 'Agents';
         } else if (contextValue === 'project-folder-jobs' || (contextValue === 'project-item' && node.itemType === 'jobs')) {
-            url = 'https://raw.githubusercontent.com/mindsdb/mindsdb/refs/heads/main/docs/mindsdb_sql/sql/create/jobs.mdx';
+            url = 'https://raw.githubusercontent.com/mindsdb/minds-platform/refs/heads/main/docs/mindsdb_sql/sql/create/jobs.mdx';
             title = 'Jobs';
         } else if (contextValue === 'project-folder-knowledge_bases' || (contextValue === 'project-item' && node.itemType === 'knowledge_bases')) {
-            url = 'https://raw.githubusercontent.com/mindsdb/mindsdb/refs/heads/main/docs/mindsdb_sql/knowledge_bases/overview.mdx';
+            url = 'https://raw.githubusercontent.com/mindsdb/minds-platform/refs/heads/main/docs/mindsdb_sql/knowledge_bases/overview.mdx';
             title = 'Knowledge Bases';
         } else if (contextValue === 'project-folder-models' || (contextValue === 'project-item' && node.itemType === 'models')) {
-            url = 'https://raw.githubusercontent.com/mindsdb/mindsdb/refs/heads/main/docs/mindsdb_sql/sql/create/model.mdx';
+            url = 'https://raw.githubusercontent.com/mindsdb/minds-platform/refs/heads/main/docs/mindsdb_sql/sql/create/model.mdx';
             title = 'Models';
         } else if (contextValue === 'project-folder-views' || (contextValue === 'project-item' && node.itemType === 'views')) {
-            url = 'https://raw.githubusercontent.com/mindsdb/mindsdb/refs/heads/main/docs/mindsdb_sql/sql/create/view.mdx';
+            url = 'https://raw.githubusercontent.com/mindsdb/minds-platform/refs/heads/main/docs/mindsdb_sql/sql/create/view.mdx';
             title = 'Views';
         } else if (contextValue === 'database' || contextValue === 'database-deletable') {
-            url = `https://raw.githubusercontent.com/mindsdb/mindsdb/main/mindsdb/integrations/handlers/${label}_handler/README.md`;
+            url = `https://raw.githubusercontent.com/mindsdb/minds-platform/main/mindsdb/integrations/handlers/${label}_handler/README.md`;
             title = `${label} Documentation`;
         }
 

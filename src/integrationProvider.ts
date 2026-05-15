@@ -71,7 +71,7 @@ export class IntegrationExplorerPanel {
             const { marked } = await import('marked');
             
             // Preprocess logic for MDX/Markdown
-            const baseUrl = 'https://raw.githubusercontent.com/mindsdb/mindsdb/refs/heads/main/docs';
+            const baseUrl = 'https://raw.githubusercontent.com/mindsdb/minds-platform/refs/heads/main/docs';
             let processed = markdown
                 .replace(/^---\n[\s\S]*?\n---\n/, '')
                 .replace(/src="\/([^"]+)"/g, `src="${baseUrl}/$1"`)
@@ -95,14 +95,14 @@ export class IntegrationExplorerPanel {
         this._panel.webview.html = this.getLoadingHtml(`Loading ${name}...`);
         
         try {
-            const url = `https://raw.githubusercontent.com/mindsdb/mindsdb/main/mindsdb/integrations/handlers/${name}/README.md`;
+            const url = `https://raw.githubusercontent.com/mindsdb/minds-platform/main/mindsdb/integrations/handlers/${name}/README.md`;
             const markdown = await this.fetchUrl(url);
             
             // Re-use logic from docProvider conditionally
             const { marked } = await import('marked');
             
             // Preprocess relative image sources specific to GitHub
-            const baseUrl = `https://raw.githubusercontent.com/mindsdb/mindsdb/main/mindsdb/integrations/handlers/${name}`;
+            const baseUrl = `https://raw.githubusercontent.com/mindsdb/minds-platform/main/mindsdb/integrations/handlers/${name}`;
             const processed = markdown.replace(/src="\.\/([^"]+)"/g, `src="${baseUrl}/$1"`);
             
             const htmlContent = await marked.parse(processed);
@@ -119,7 +119,7 @@ export class IntegrationExplorerPanel {
     }
 
     private fetchIntegrationsList(): Promise<any[]> {
-        const url = 'https://api.github.com/repos/mindsdb/mindsdb/contents/mindsdb/integrations/handlers?ref=main';
+        const url = 'https://api.github.com/repos/mindsdb/minds-platform/contents/mindsdb/integrations/handlers?ref=main';
         return new Promise((resolve, reject) => {
             const options = {
                 headers: { 'User-Agent': 'MindsDB-VSCode-Extension' }
@@ -167,11 +167,11 @@ export class IntegrationExplorerPanel {
         // Generate grid items
         const cardsHtml = integrations.map(i => {
             const displayName = i.name.replace('_handler', '');
-            const iconUrl = `https://raw.githubusercontent.com/mindsdb/mindsdb/refs/heads/main/mindsdb/integrations/handlers/${i.name}/icon.svg`;
+            const iconUrl = `https://raw.githubusercontent.com/mindsdb/minds-platform/refs/heads/main/mindsdb/integrations/handlers/${i.name}/icon.svg`;
             
             return `
                 <div class="card" onclick="openIntegration('${i.name}')">
-                    <img class="card-icon" src="${iconUrl}" onerror="if(this.src.endsWith('.svg')){this.src=this.src.replace('.svg', '.png')}else{this.src='https://raw.githubusercontent.com/mindsdb/mindsdb/main/assets/mindsdb_logo.png'; this.onerror=null;}" />
+                    <img class="card-icon" src="${iconUrl}" onerror="if(this.src.endsWith('.svg')){this.src=this.src.replace('.svg', '.png')}else{this.src='https://raw.githubusercontent.com/mindsdb/minds-platform/main/assets/mindsdb_logo.png'; this.onerror=null;}" />
                     <div class="card-title">${displayName}</div>
                 </div>
             `;
